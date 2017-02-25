@@ -1,0 +1,92 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+# git clone 後、実行すべきコマンドがある場合はこんな感じ
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+hook_post_update = '''
+    if dein#util#_is_windows()
+        let cmd = 'tools\\update-dll-mingw'
+    elseif dein#util#_is_cygwin()
+        let cmd = 'make -f make_cygwin.mak'
+    elseif executable('gmake')
+        let cmd = 'gmake'
+    else
+        let cmd = 'make'
+    endif
+    let g:dein#plugin.build = cmd
+'''
+
+[[plugins]]
+repo = 'tomasr/molokai'
+hook_add = '''
+    au MyAutoCmd VimEnter * nested colorscheme molokai
+    syntax on
+    set t_Co=251
+'''
+#[[plugins]]
+#repo = 'w0ng/vim-hybrid'
+#hook_add = '''
+#	set background=dark
+#'''
+#hook_post_source = '''
+#	let g:hybrid_custom_term_colors = 1
+#	let g:hybrid_reduced_contrast = 1
+#	colorscheme hybrid'
+#	syntax on
+#'''
+
+#[[plugins]]
+#repo    = 'vim-airline/vim-airline'
+#depends = ['vim-airline-themes']
+#
+#[[plugins]]
+#repo = 'vim-airline/vim-airline-themes'
+#
+[[plugins]]
+repo = "thinca/vim-template"
+hook_add = '''
+    autocmd MyAutoCmd User plugin-template-loaded call s:template_keywords()
+    function! s:template_keywords()
+        silent! %s/<+DATE+>/\=strftime('%Y-%m-%d')/g
+        silent! %s/<+FILENAME+>/\=expand('%:r')/g
+    endfunction
+    " テンプレート中に含まれる'<+CURSOR+>'にカーソルを移動
+    autocmd MyAutoCmd User plugin-template-loaded
+       \if search('<+CURSOR+>')
+       \ |   silent! execute 'normal! "_da>'
+       \ | endif
+'''
+[[plugins]]
+repo = "tpope/vim-fugitive"
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+#
+#[[plugins]]
+#repo = 'vim-scripts/Align'
+
+# [[plugins]]
+# repo = 'vim-scripts/YankRing.vim'
+# 
+# [[plugins]]
+# repo = 'Shougo/vimshell.vim'
+
+#[[plugins]]
+#repo = 'Glench/Vim-Jinja2-Syntax'
+
+[[plugins]]
+repo = 'vim-scripts/gnuplot-syntax-highlighting'
+#hook_add = '''
+#    au BufRead,BufNewFile *.plt set filetype=gnuplot
+#'''
+[[plugins]]
+repo = 'https://github.com/Glench/Vim-Jinja2-Syntax'
+#hook_add = '''
+#    au BufRead,BufNewFile *.jinja set filetype=jinja
+#''' 
+
+[[plugins]]
+repo = 'https://github.com/ujtak/vim-verb'
+#[[plugins]]
+#repo = 'cespare/vim-toml'
