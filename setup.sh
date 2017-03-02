@@ -1,5 +1,6 @@
 cp vimrc ~/.vimrc
 cp -r rc ~/.vim/
-mkdir -p ~/.vim/utils/dein/repos/github.com/Shougo/dein.vim
-git clone https://github.com/Shougo/dein.vim.git \
-        ~/.vim/dein/repos/github.com/Shougo/dein.vim
+if [ ! -e  ~/.vim/utils/dein/repos/github.com/Shougo/ ]; then
+    cd ~/.vim/utils/dein/repos/github.com/Shougo/
+    git clone https://github.com/Shougo/dein.vim.git .
+fi
