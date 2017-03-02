@@ -224,7 +224,7 @@ au BufNewFile,BufRead *.jinja set filetype=verilogams
  
 "dein.vim のインストール
 " プラグインが実際にインストールされるディレクトリ
-let s:dein_dir = expand('/.vim/utils/dein')
+let s:dein_dir = expand('~/.vim/utils/dein')
 " dein.vim 本体
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
