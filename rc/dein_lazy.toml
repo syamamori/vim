@@ -72,8 +72,8 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-
 '''
+
 # insert = 1
 
 # ロード後下記の関数は実行する
@@ -175,34 +175,34 @@ on_cmd = ['Unite', "UniteWithBufferDir"]
 # [[plugins]]
 # repo = "tpope/vim-fugitive"
 
-[[plugins]]
-repo = "Shougo/neosnippet.vim"
-depends = "honza/vim-snippets"
-insert = 1
-hook_post_source = '''
-    " Plugin key-mappings.
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
-    " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
-    " For snippet_complete marker.
-    if has('conceal')
-        set conceallevel=2 concealcursor=i
-    endif
-    " Enable snipMate compatibility feature.
-    let g:neosnippet#enable_snipmate_compatibility = 1
-    " Tell Neosnippet about the other snippets
-    let g:neosnippet#snippets_directory=s:bundle_root . '/vim-snippets/snippets'
-'''
+# [[plugins]]
+# repo = "Shougo/neosnippet.vim"
+# depends = "honza/vim-snippets"
+# insert = 1
+# hook_post_source = '''
+#     " Plugin key-mappings.
+#     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+#     xmap <C-k>     <Plug>(neosnippet_expand_target)
+#     " SuperTab like snippets behavior.
+#     imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+#     \ "\<Plug>(neosnippet_expand_or_jump)"
+#     \: pumvisible() ? "\<C-n>" : "\<TAB>"
+#     smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+#     \ "\<Plug>(neosnippet_expand_or_jump)"
+#     \: "\<TAB>"
+#     " For snippet_complete marker.
+#     if has('conceal')
+#         set conceallevel=2 concealcursor=i
+#     endif
+#     " Enable snipMate compatibility feature.
+#     let g:neosnippet#enable_snipmate_compatibility = 1
+#     " Tell Neosnippet about the other snippets
+#     let g:neosnippet#snippets_directory=s:bundle_root . '/vim-snippets/snippets'
+# '''
 
-[[plugins]]
-repo = "honza/vim-snippets"
+# [[plugins]]
+# repo = "honza/vim-snippets"
 
 # [[plugins]]
 # repo = "sjl/gundo.vim"
@@ -222,39 +222,37 @@ on_post_source = '''
 '''
 
 [[plugins]]
-repo = "jmcantrell/vim-virtualenv"
-on_ft = ["python", "python3", "djangohtml", "jinja"]
-
-[[plugins]]
 repo = "davidhalter/jedi-vim"
 on_ft = ["python", "python3", "djangohtml", "jinja"]
+on_source = "vim-pyenv"
+on_post_update = '''
+    if dein#util#_is_windows()
+        let cmd = 'pip install jedi'
+    elseif dein#util#_is_unix()
+        let cmd = 'pip install jedi'
+    else
+        let cmd = 'pip install jedi'
+    endif
+ '''
+on_post_source = '''
+     " jediにvimの設定を任せると'completeopt+=preview'するので
+     " 自動設定機能をOFFにし手動で設定を行う
+     let g:jedi#auto_vim_configuration = 0
+     " 補完の最初の項目が選択された状態だと使いにくいためオフにする
+     let g:jedi#popup_select_first = 0
+     " quickrunと被るため大文字に変更
+     let g:jedi#rename_command = '<Leader>R'
+     " gundoと被るため大文字に変更 (2013-06-24 10:00 追記）
+     let g:jedi#goto_command = '<Leader>G'
+'''
 
-#on_post_update = '''
-#     if dein#util#_is_windows()
-#         let cmd = 'pip install jedi'
-#     elseif dein#util#_is_unix()
-#         let cmd = 'pip install jedi'
-#     else
-#    	 let cmd = 'pip install jedi'
-#     endif
-# '''
-# on_post_source = '''
-#     " jediにvimの設定を任せると'completeopt+=preview'するので
-#     " 自動設定機能をOFFにし手動で設定を行う
-#     let g:jedi#auto_vim_configuration = 0
-#     " 補完の最初の項目が選択された状態だと使いにくいためオフにする
-#     let g:jedi#popup_select_first = 0
-#     " quickrunと被るため大文字に変更
-#     let g:jedi#rename_command = '<Leader>R'
-#     " gundoと被るため大文字に変更 (2013-06-24 10:00 追記）
-#     let g:jedi#goto_command = '<Leader>G'
-# '''
-#[[plugins]]
-#repo = 'lambdalisue/vim-pyenv'
-#depends = 'davidhalter/jedi-vim'
-#on_ft = 'python'
-
-
+[[plugins]]
+repo = "lambdalisue/vim-pyenv"
+on_ft = ["python", "python3", "djangohtml", "jinja"]
+on_post_source = '''
+    let cmd = 'pip install jedi'
+'''
+ 
 [[plugins]]
 repo = 'andviro/flake8-vim'
 on_ft = ["python", "python3", "djangohtml", "jinja"]

@@ -257,9 +257,9 @@ if dein#check_install(['vimproc'])
     call dein#install(['vimproc'])
 endif 
 
-if dein#check_install(['quickrun'])
-    call dein#install(['quickrun'])
-endif         
+" if dein#check_install(['quickrun'])
+"     call dein#install(['quickrun'])
+" endif         
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
     call dein#install()

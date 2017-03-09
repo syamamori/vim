@@ -57,8 +57,8 @@ hook_add = '''
        \ |   silent! execute 'normal! "_da>'
        \ | endif
 '''
-[[plugins]]
-repo = "tpope/vim-fugitive"
+#[[plugins]]
+#repo = "tpope/vim-fugitive"
 
 [[plugins]]
 repo = 'tpope/vim-surround'
@@ -86,7 +86,7 @@ repo = 'https://github.com/Glench/Vim-Jinja2-Syntax'
 #    au BufRead,BufNewFile *.jinja set filetype=jinja
 #''' 
 
-[[plugins]]
-repo = 'https://github.com/ujtak/vim-verb'
+# [[plugins]]
+# repo = 'https://github.com/ujtak/vim-verb'
 #[[plugins]]
 #repo = 'cespare/vim-toml'
