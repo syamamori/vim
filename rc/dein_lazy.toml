@@ -1,4 +1,5 @@
-[[plugins]] repo = 'Shougo/neocomplete.vim'
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
 on_i = 1
 hook_add = '''
 "Note: This option must set it in .vimrc(_vimrc).    NOT IN .gvimrc(_gvimrc)!
@@ -74,140 +75,40 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 '''
 
-# insert = 1
-
-# ロード後下記の関数は実行する
-#hook_post_source = '''
-#    let g:neocomplete#enable_at_startup = 1
-#    let g:neocomplete#enable_smart_case = 1
-#    " NeoCompleteを有効化
-#    " NeoCompleteEnable
-#'''
-#
-# [[plugins]]
-# repo = 'sjl/gundo.vim'
-# on_cmd = ['GundoToggle']
-# 
-# [[plugins]]
-# repo = 'vim-scripts/TaskList.vim'
-# on_map = ['<Plug>TaskList']
-# 
-# [[plugins]]
-# repo = 'mattn/zencoding-vim'
-# on_ft =['html']
-# 
 [[plugins]]
 repo = "Shougo/unite.vim"
 on_cmd = ['Unite', "UniteWithBufferDir"]
 
-# [[plugins]]
-# repo = 'h1mesuke/unite-outline'
-# on_source = ['outline']
-# hook_add = '''
-#     nnoremap [unite] <Nop>
-#     nmap U [unite]
-#     nnoremap <silent> [unite]f :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-#     nnoremap <silent> [unite]b :<C-u>Unite buffer<CR>
-#     nnoremap <silent> [unite]r :<C-u>Unite register<CR>
-#     nnoremap <silent> [unite]m :<C-u>Unite file_mru<CR>
-#     nnoremap <silent> [unite]c :<C-u>Unite bookmark<CR>
-#     nnoremap <silent> [unite]o :<C-u>Unite outline<CR>
-#     nnoremap <silent> [unite]t :<C-u>Unite tab<CR>
-#     nnoremap <silent> [unite]w :<C-u>Unite window<CR>
-# '''
-# hook_post_source = '''
-#     " start unite in insert mode
-#     let g:unite_enable_start_insert = 1
-#     " use vimfiler to open directory
-#     call unite#custom_default_action("source/bookmark/directory", "vimfiler")
-#     call unite#custom_default_action("directory", "vimfiler")
-#     call unite#custom_default_action("directory_mru", "vimfiler")
-#     autocmd MyAutoCmd FileType unite call s:unite_settings()
-#     function! s:unite_settings()
-#         imap <buffer> <Esc><Esc> <Plug>(unite_exit)
-#         nmap <buffer> <Esc> <Plug>(unite_exit)
-#         nmap <buffer> <C-n> <Plug>(unite_select_next_line)
-#         nmap <buffer> <C-p> <Plug>(unite_select_previous_line)
-#     endfunction
-# '''
-# [[plugins]]
-# repo = "Shougo/vimfiler"
-# depoends = ["Shougo/unite.vim"]
-# on_cmd = ["VimFilerTab", "VimFiler", "VimFilerExplorer"]
-# on_map = ['<Plug>(vimfiler_switch)']
-# hook_add = '''
-#     nnoremap <Leader>e :VimFilerExplorer<CR>
-#     " close vimfiler automatically when there are only vimfiler open
-#     autocmd MyAutoCmd BufEnter * if (winnr('$') == 1 && &filetype ==# 'vimfiler') | q | endif
-# '''
-# hook_post_source = '''
-#     let g:vimfiler_as_default_explorer = 1
-#     let g:vimfiler_enable_auto_cd = 1
-#     " .から始まるファイルおよび.pycで終わるファイルを不可視パターンに
-#     " 2013-08-14 追記
-#     let g:vimfiler_ignore_pattern = "\%(^\..*\|\.pyc$\)"
-# 
-#     " vimfiler specific key mappings
-#     autocmd MyAutoCmd FileType vimfiler call s:vimfiler_settings()
-#     function! s:vimfiler_settings()
-#         " ^^ to go up
-#         nmap <buffer> ^^ <Plug>(vimfiler_switch_to_parent_directory)
-#         " use R to refresh
-#         nmap <buffer> R <Plug>(vimfiler_redraw_screen)
-#         " overwrite C-l
-#         nmap <buffer> <C-l> <C-w>l
-#     endfunction
-# '''
-# 
-# [[plugins]]
-# repo = "mattn/gist-vim"
-# depends = ["mattn/webapi-vim"]
-# on_cmd = ['Gist']
-# 
-# [[plugins]]
-# repo = "mattn/webapi-vim"
-# 
-# [[plugins]]
-# repo = "gregsexton/gitv"
-# depens = ["tpope/vim-fugitive"]
-# on_cmd = ['Gitv']
-# 
-# [[plugins]]
-# repo = "tpope/vim-fugitive"
+[[plugins]]
+repo = "Shougo/neosnippet-snippets"
+
+[[plugins]]
+    repo = "Shougo/neosnippet.vim"
+    depends = ['neosnippet-snippets']
+    hook_add = '''
+    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+    " SuperTab like snippets behavior.
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \: pumvisible() ? "\<C-n>" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+    \ "\<Plug>(neosnippet_expand_or_jump)"
+    \: "\<TAB>"
+
+    " For snippet_complete marker.
+    if has('conceal')
+      set conceallevel=2 concealcursor=i
+    endif
+    let g:neosnippet#snippets_directory=['~/.vim/utils/dein/repos/github/Shougo/neosnippet-snippets/snippets/']
+    let g:neosnippet#snippets_directory+=['~/.vim/utils/dein/repos/github/honza/vim-snippets/snippets/']
+'''
 
 # [[plugins]]
-# repo = "Shougo/neosnippet.vim"
-# depends = "honza/vim-snippets"
-# insert = 1
-# hook_post_source = '''
-#     " Plugin key-mappings.
-#     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-#     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-#     xmap <C-k>     <Plug>(neosnippet_expand_target)
-#     " SuperTab like snippets behavior.
-#     imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-#     \ "\<Plug>(neosnippet_expand_or_jump)"
-#     \: pumvisible() ? "\<C-n>" : "\<TAB>"
-#     smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-#     \ "\<Plug>(neosnippet_expand_or_jump)"
-#     \: "\<TAB>"
-#     " For snippet_complete marker.
-#     if has('conceal')
-#         set conceallevel=2 concealcursor=i
-#     endif
-#     " Enable snipMate compatibility feature.
-#     let g:neosnippet#enable_snipmate_compatibility = 1
-#     " Tell Neosnippet about the other snippets
-#     let g:neosnippet#snippets_directory=s:bundle_root . '/vim-snippets/snippets'
-# '''
-
-# [[plugins]]
-# repo = "honza/vim-snippets"
-
-# [[plugins]]
-# repo = "sjl/gundo.vim"
-# on_cmd =  ['GundoToggle']
-# hook_source = 'nnoremap <Leader>g :GundoToggle<CR>'
+# repo = "honza/vim-snippets.vim"
+ 
 
 [[plugins]]
 repo = "thinca/vim-quickrun"
@@ -224,7 +125,7 @@ on_post_source = '''
 [[plugins]]
 repo = "davidhalter/jedi-vim"
 on_ft = ["python", "python3", "djangohtml", "jinja"]
-on_source = "vim-pyenv"
+# on_source = "vim-pyenv"
 on_post_update = '''
     if dein#util#_is_windows()
         let cmd = 'pip install jedi'
@@ -246,12 +147,12 @@ on_post_source = '''
      let g:jedi#goto_command = '<Leader>G'
 '''
 
-[[plugins]]
-repo = "lambdalisue/vim-pyenv"
-on_ft = ["python", "python3", "djangohtml", "jinja"]
-on_post_source = '''
-    let cmd = 'pip install jedi'
-'''
+# [[plugins]]
+# repo = "lambdalisue/vim-pyenv"
+# on_ft = ["python", "python3", "djangohtml", "jinja"]
+# on_post_source = '''
+#     let cmd = 'pip install jedi'
+# '''
  
 [[plugins]]
 repo = 'andviro/flake8-vim'
