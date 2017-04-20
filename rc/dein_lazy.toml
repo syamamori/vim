@@ -85,10 +85,11 @@ repo = "Shougo/neosnippet-snippets"
 [[plugins]]
     repo = "Shougo/neosnippet.vim"
     depends = ['neosnippet-snippets']
+    on_i = 1
     hook_add = '''
-    imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-    xmap <C-k>     <Plug>(neosnippet_expand_target)
+    imap <C-k> <Plug>(neosnippet_expand_or_jump)
+    smap <C-k> <Plug>(neosnippet_expand_or_jump)
+    xmap <C-k> <Plug>(neosnippet_expand_target)
 
     " SuperTab like snippets behavior.
     imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
@@ -102,7 +103,7 @@ repo = "Shougo/neosnippet-snippets"
     if has('conceal')
       set conceallevel=2 concealcursor=i
     endif
-    let g:neosnippet#snippets_directory=['~/.vim/utils/dein/repos/github/Shougo/neosnippet-snippets/snippets/']
+    let g:neosnippet#snippets_directory=['~/.vim/utils/dein/repos/github/Shougo/neosnippet-snippets/neosnippets/']
     let g:neosnippet#snippets_directory+=['~/.vim/utils/dein/repos/github/honza/vim-snippets/snippets/']
 '''
 
