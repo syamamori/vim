@@ -3,5 +3,4 @@
 #
 # Author:   yamamori
 # Created:  <+DATE+>
-#
-<+CURSOR+>
+# <+CURSOR+>

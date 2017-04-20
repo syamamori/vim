@@ -81,7 +81,9 @@ on_cmd = ['Unite', "UniteWithBufferDir"]
 
 [[plugins]]
 repo = "Shougo/neosnippet-snippets"
-
+[[plugins]]
+repo = "honza/vim-snippets"
+ 
 [[plugins]]
     repo = "Shougo/neosnippet.vim"
     depends = ['neosnippet-snippets']
@@ -92,19 +94,15 @@ repo = "Shougo/neosnippet-snippets"
     xmap <C-k> <Plug>(neosnippet_expand_target)
 
     " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-    \ "\<Plug>(neosnippet_expand_or_jump)"
-    \: "\<TAB>"
+    imap <expr><TAB> neosnippet#expandable_or_jumpable() ?"\<Plug>(neosnippet_expand_or_jump)": pumvisible() ? "\<C-n>" : "\<TAB>"
+    smap <expr><TAB> neosnippet#expandable_or_jumpable() ?"\<Plug>(neosnippet_expand_or_jump)": "\<TAB>"
 
     " For snippet_complete marker.
     if has('conceal')
       set conceallevel=2 concealcursor=i
     endif
     let g:neosnippet#snippets_directory=['~/.vim/utils/dein/repos/github/Shougo/neosnippet-snippets/neosnippets/']
-    let g:neosnippet#snippets_directory+=['~/.vim/utils/dein/repos/github/honza/vim-snippets/snippets/']
+    let g:neosnippet#snippets_directory+=['~/.vim/utils/dein/repos/github.com/honza/vim-snippets/snippets/']
 '''
 
 # [[plugins]]
