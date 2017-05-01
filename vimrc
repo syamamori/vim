@@ -154,8 +154,8 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
-" 入力モード中に素早くjjと入力した場合はESCとみなす
-inoremap <C-j> <Esc>
+" 入力モード中に素早くCjと入力した場合はESCとみなす
+inoremap <silent> <C-j> <Esc>
 " 日本語入力で”っj”と入力してもEnterキーで確定させればインサートモードを抜ける
 inoremap <silent> っj <ESC>
 
