@@ -1,4 +1,7 @@
 cp vimrc ~/.vimrc
-cp -r rc ~/.vim/rc
+if [ ! -e ~/.vim/rc ]; then
+    mkdir ~/.vim/rc
+fi
+cp -r rc ~/.vim/
 cp -r template ~/.vim/
 

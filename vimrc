@@ -231,6 +231,7 @@ endif
 
 " set syntax highlight jinja -> vams
 au BufNewFile,BufRead *.jinja set filetype=verilogams
+let g:tex_flavor='latex'
  
 "dein.vim のインストール
 " プラグインが実際にインストールされるディレクトリ

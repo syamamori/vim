@@ -1,6 +1,6 @@
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
-on_i = 1
+# on_i = 1
 hook_add = '''
 "Note: This option must set it in .vimrc(_vimrc).    NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
@@ -86,8 +86,8 @@ repo = "honza/vim-snippets"
  
 [[plugins]]
     repo = "Shougo/neosnippet.vim"
-    depends = ['neosnippet-snippets']
-    on_i = 1
+    depends = ['neosnippet-snippets', 'vim-snippets']
+    # on_i = 1
     hook_add = '''
     imap <C-k> <Plug>(neosnippet_expand_or_jump)
     smap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -101,8 +101,17 @@ repo = "honza/vim-snippets"
     if has('conceal')
       set conceallevel=2 concealcursor=i
     endif
-    let g:neosnippet#snippets_directory=['~/.vim/utils/dein/repos/github/Shougo/neosnippet-snippets/neosnippets/']
-    let g:neosnippet#snippets_directory+=['~/.vim/utils/dein/repos/github.com/honza/vim-snippets/snippets/']
+    let g:neosnippet#enable_snipmate_compatibility = 1
+    let s:github_repo = expand('~/.vim/utils/dein/repos/github.com')
+    let g:neosnippet#snippets_directory=[s:github_repo . '/Shougo/neosnippet-snippets/neosnippets/']
+    let g:neosnippet#snippets_directory+=[s:github_repo . '/honza/vim-snippets/snippets/']
+    let s:ymatz_repo = s:github_repo . '/ymatz/vim-latex-completion' 
+    if !isdirectory(s:ymatz_repo)
+        echo isdirectory(s:ymatz_repo)
+        execute '!git clone https://github.com/ymatz/vim-latex-completion.git' s:ymatz_repo
+    endif
+    set dictionary=s:ymatz_repo
+    let g:neosnippet#snippets_directory+=[s:ymatz_repo]
 '''
 
 # [[plugins]]
@@ -165,6 +174,7 @@ on_ft = ["python", "python3", "djangohtml", "jinja"]
 repo = 'lervag/vimtex'
 on_ft = ["tex"]
 hook_add = '''
+    let g:tex_flavor='latex'
     " clientserver error を無視する
     let g:vimtex_compiler_latexmk = {'callback' : 0}
     let g:vimtex_echo_ignore_wait = 1
