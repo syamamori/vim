@@ -17,7 +17,8 @@ hook_add = '''
     let g:neocomplete#sources#dictionary#dictionaries = {
         \ 'default' : '',
         \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
+        \ 'scheme' : $HOME.'/.gosh_completions',
+        \ 'dict' : $HOME.'/.vim/dic'
         \ }
 
     " Define keyword.
@@ -59,7 +60,7 @@ hook_add = '''
     autocmd MyAutoCmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd MyAutoCmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
     autocmd MyAutoCmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    " autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
     autocmd MyAutoCmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
     
     " Enable heavy omni completion.
@@ -94,8 +95,8 @@ hook_post_source = '''
     xmap <C-k> <Plug>(neosnippet_expand_target)
 
     " SuperTab like snippets behavior.
-    imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
-    smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+    " imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+    " smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 '''
 hook_source = '''
     " For snippet_complete marker.
@@ -106,12 +107,13 @@ hook_source = '''
     let s:github_repo = expand('~/.vim/utils/dein/repos/github.com')
     let g:neosnippet#snippets_directory=[s:github_repo . '/Shougo/neosnippet-snippets/neosnippets/']
     let g:neosnippet#snippets_directory+=[s:github_repo . '/honza/vim-snippets/snippets/']
-    let s:ymatz_repo = s:github_repo . '/ymatz/vim-latex-completion' 
+    let s:ymatz_repo = s:github_repo . '/ymatz/vim-latex-completion'
     if !isdirectory(s:ymatz_repo)
         echo isdirectory(s:ymatz_repo)
         execute '!git clone https://github.com/ymatz/vim-latex-completion.git' s:ymatz_repo
     endif
-    set dictionary=s:ymatz_repo
+
+    set dictionary=$HOME/.vim/utils/dein/repos/github.com/ymatz/vim-latex-completion/tex.dict
     let g:neosnippet#snippets_directory+=[s:ymatz_repo]
 '''
 
@@ -122,8 +124,8 @@ hook_source = '''
 [[plugins]]
 repo = "thinca/vim-quickrun"
 hook_add = '''
-    let g:quickrun_config = {"_": {"runner": "remote/vimproc"}}
-    let g:quickrun_config={'_': {'split': 'vertical'}}
+    let g:quickrun_config = {"*": {"runner": "remote/vimproc"}}
+    " let g:quickrun_config = {'_': {'split': 'vertical'}}
     nmap <Leader>r <Plug>(quickrun)
 '''
 
@@ -141,6 +143,9 @@ hook_post_update = '''
     endif
  '''
 hook_source  = '''
+    autocmd FileType python setlocal omnifunc=jedi#completions
+    let g:jedi#completions_enabled = 0
+
     " jediにvimの設定を任せると'completeopt+=preview'するので
     " 自動設定機能をOFFにし手動で設定を行う
     let g:jedi#auto_vim_configuration=0
@@ -153,6 +158,13 @@ hook_source  = '''
     " . で補完開始がウザイのできる
     let g:jedi#popup_on_dot=0
     let g:jedi#completions_command = '<C-N>'
+
+
+    if !exists('g:neocomplete#force_omni_input_patterns')
+            let g:neocomplete#force_omni_input_patterns = {}
+    endif
+
+    let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 '''
 
 # [[plugins]]

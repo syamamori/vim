@@ -19,11 +19,11 @@ hook_post_update = '''
 
 [[plugins]]
 repo = 'tomasr/molokai'
-hook_add = '''
-    au MyAutoCmd VimEnter * nested colorscheme molokai
-    syntax on
-    set t_Co=251
-'''
+# hook_add = '''
+#     au MyAutoCmd VimEnter * nested colorscheme molokai
+#     syntax on
+#     set t_Co=251
+# '''
 #[[plugins]]
 #repo = 'w0ng/vim-hybrid'
 #hook_add = '''
