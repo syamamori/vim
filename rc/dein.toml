@@ -5,44 +5,90 @@ repo = 'Shougo/dein.vim'
 [[plugins]]
 repo = 'Shougo/vimproc.vim'
 hook_post_update = '''
-    if dein#util#_is_windows()
-        let cmd = 'tools\\update-dll-mingw'
-    elseif dein#util#_is_cygwin()
-        let cmd = 'make -f make_cygwin.mak'
-    elseif executable('gmake')
-        let cmd = 'gmake'
-    else
-        let cmd = 'make'
-    endif
-    let g:dein#plugin.build = cmd
+    call dein#add('Shougo/vimproc', {'build': 'make'})
 '''
 
 [[plugins]]
-repo = 'tomasr/molokai'
-# hook_add = '''
-#     au MyAutoCmd VimEnter * nested colorscheme molokai
-#     syntax on
-#     set t_Co=251
-# '''
-#[[plugins]]
-#repo = 'w0ng/vim-hybrid'
-#hook_add = '''
-#	set background=dark
-#'''
-#hook_post_source = '''
-#	let g:hybrid_custom_term_colors = 1
-#	let g:hybrid_reduced_contrast = 1
-#	colorscheme hybrid'
-#	syntax on
-#'''
+repo = 'Shougo/neocomplete.vim'
+# on_i = 1
+hook_add = '''
+    "Note: This option must set it in .vimrc(_vimrc).    NOT IN .gvimrc(_gvimrc)!
+    " Disable AutoComplPop.
+    let g:acp_enableAtStartup = 0
+    " Use neocomplete.
+    let g:neocomplete#enable_at_startup = 1
+    " Use smartcase.
+    let g:neocomplete#enable_smart_case = 1
+    " Set minimum syntax keyword length.
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
+    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-#[[plugins]]
-#repo    = 'vim-airline/vim-airline'
-#depends = ['vim-airline-themes']
-#
-#[[plugins]]
-#repo = 'vim-airline/vim-airline-themes'
-#
+    " Define dictionary.
+    let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions',
+        \ 'dict' : $HOME.'/.vim/dic'
+        \ }
+
+    " Define keyword.
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>    pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    " Close popup by <Space>.
+    "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
+
+    " AutoComplPop like behavior.
+    "let g:neocomplete#enable_auto_select = 1
+
+    " Shell like behavior(not recommended).
+    "set completeopt+=longest
+    "let g:neocomplete#enable_auto_select = 1
+    "let g:neocomplete#disable_auto_complete = 1
+    "inoremap <expr><TAB>    pumvisible() ? "\<Down>" : "\<C-x>\<C-u>"
+
+    " Enable omni completion.
+    autocmd MyAutoCmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd MyAutoCmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd MyAutoCmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    " autocmd MyAutoCmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd MyAutoCmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    "let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
+    " For perlomni.vim setting.
+    " https://github.com/c9s/perlomni.vim
+    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+'''  
+
+[[plugins]]
+repo = 'tomasr/molokai'
+
 [[plugins]]
 repo = "thinca/vim-template"
 hook_add = '''
@@ -57,41 +103,35 @@ hook_add = '''
        \ |   silent! execute 'normal! "_da>'
        \ | endif
 '''
-#[[plugins]]
-#repo = "tpope/vim-fugitive"
+[[plugins]]
+repo = "tpope/vim-fugitive"
+hook_add = '''
+    " Statuslineの設定
+    set laststatus=2
+    set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ \[ENC=%{&fileencoding}]%P 
+'''
 
 [[plugins]]
 repo = 'tpope/vim-surround'
 #
 #[[plugins]]
 #repo = 'vim-scripts/Align'
-
-# [[plugins]]
-# repo = 'vim-scripts/YankRing.vim'
-# 
-# [[plugins]]
-# repo = 'Shougo/vimshell.vim'
-
 #[[plugins]]
 #repo = 'Glench/Vim-Jinja2-Syntax'
 
 [[plugins]]
+repo = 'vim-scripts/YankRing.vim'
+
+[[plugins]]
+repo = 'Shougo/vimshell.vim'
+
+
+[[plugins]]
 repo = 'vim-scripts/gnuplot-syntax-highlighting'
-#hook_add = '''
-#    au BufRead,BufNewFile *.plt set filetype=gnuplot
-#'''
+
 [[plugins]]
 repo = 'https://github.com/Glench/Vim-Jinja2-Syntax'
-#hook_add = '''
-#    au BufRead,BufNewFile *.jinja set filetype=jinja
-#''' 
 
-# [[plugins]]
-# repo = 'https://github.com/ujtak/vim-verb'
-
-[[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
 
 [[plugins]] # カーソル位置のコンテキストに合わせてftを切り替える
 repo = 'osyo-manga/vim-precious'

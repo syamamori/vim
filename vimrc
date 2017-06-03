@@ -74,7 +74,7 @@ set noswapfile
 set list                " 不可視文字の可視化
 set number              " 行番号の表示
 set wrap                " 長いテキストの折り返し
-set textwidth=0         " 自動的に改行が入るのを無効化
+" set textwidth=0         " 自動的に改行が入るのを無効化
 set colorcolumn=80      " その代わり80文字目にラインを入れる
 
 "set paste   " ペースト時のインデントを無効に
@@ -264,13 +264,10 @@ if dein#load_state(s:dein_dir)
 endif
 
 " vimprocだけは最初にインストールしてほしい
-if dein#check_install(['vimproc'])
-    call dein#install(['vimproc'])
-endif 
+if dein#check_install(['vimproc.vim'])
+    call dein#install(['vimproc.vim'])
+endif
 
-" if dein#check_install(['quickrun'])
-"     call dein#install(['quickrun'])
-" endif         
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
     call dein#install()
