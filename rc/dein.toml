@@ -139,3 +139,6 @@ depends = ['context_filetype.vim']
 
 [[plugins]] # カーソル位置のコンテキストのftを判定するライブラリ
 repo = 'Shougo/context_filetype.vim'
+
+[[plugins]] # ウインドウのリサイズ
+repo = 'simeji/winresizer'
