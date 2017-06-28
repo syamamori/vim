@@ -48,6 +48,7 @@ hook_add = '''
                             \     },
                             \}
     nmap <Leader>r <Plug>(quickrun)
+    nmap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 '''
 
 [[plugins]]
@@ -64,9 +65,9 @@ hook_post_update = '''
     endif
  '''
 hook_source  = '''
+    autocmd FileType python setlocal completeopt-=preview
     autocmd FileType python setlocal omnifunc=jedi#completions
     let g:jedi#completions_enabled = 0
-
     " jediにvimの設定を任せると'completeopt+=preview'するので
     " 自動設定機能をOFFにし手動で設定を行う
     let g:jedi#auto_vim_configuration=0
@@ -79,15 +80,13 @@ hook_source  = '''
     let g:jedi#goto_assignments_command = "<C-g>"   " 変数の宣言場所へジャンプ（Ctrl + g)
     let g:jedi#goto_definitions_command = "<C-d>"   " クラス、関数定義にジャンプ（Gtrl + d）
     let g:jedi#documentation_command = "<C-k>"      " Pydocを表示（Ctrl + k）
-    " . で補完開始がウザイのできる
-    let g:jedi#popup_on_dot=0
     let g:jedi#completions_command = '<C-Space>'
 
 
     if !exists('g:neocomplete#force_omni_input_patterns')
             let g:neocomplete#force_omni_input_patterns = {}
     endif
-    let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+    " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
 '''
 
 [[plugins]]
