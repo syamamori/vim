@@ -272,4 +272,6 @@ endif
 if dein#check_install()
     call dein#install()
 endif
+set runtimepath+=~/.vim/
+runtime! userrc/*.vim
 filetype plugin indent on
