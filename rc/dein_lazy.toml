@@ -64,6 +64,27 @@ hook_post_update = '''
     endif
  '''
 hook_source  = '''
+    " PATHの自動更新関数
+    " | 指定された path が $PATH に存在せず、ディレクトリとして存在している場合
+    " | のみ $PATH に加える
+    function! IncludePath(path)
+        " define delimiter depends on platform
+        if has('win16') || has('win32') || has('win64')
+            let delimiter = ";"
+        else
+            let delimiter = ":"
+        endif
+        let pathlist = split($PATH, delimiter)
+        if isdirectory(a:path) && index(pathlist, a:path) == -1
+            let $PATH=a:path.delimiter.$PATH
+        endif
+    endfunction
+
+    " ~/.pyenv/shims を $PATH に追加する
+    " これを行わないとpythonが正しく検索されない
+    if isdirectory("~/.pyenv/shims")
+        IncludePath(expand("~/.pyenv/shims"))
+    endif
     autocmd FileType python setlocal completeopt-=preview
     autocmd FileType python setlocal omnifunc=jedi#completions
     let g:jedi#completions_enabled = 0
@@ -88,25 +109,6 @@ hook_source  = '''
     " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
     "pyenv の補完を有効にする
 
-    " PATHの自動更新関数
-    " | 指定された path が $PATH に存在せず、ディレクトリとして存在している場合
-    " | のみ $PATH に加える
-    function! IncludePath(path)
-        " define delimiter depends on platform
-        if has('win16') || has('win32') || has('win64')
-            let delimiter = ";"
-        else
-            let delimiter = ":"
-        endif
-        let pathlist = split($PATH, delimiter)
-        if isdirectory(a:path) && index(pathlist, a:path) == -1
-            let $PATH=a:path.delimiter.$PATH
-        endif
-    endfunction
-
-    " ~/.pyenv/shims を $PATH に追加する
-    " これを行わないとpythonが正しく検索されない
-    IncludePath(expand("~/.pyenv/shims"))
 '''
 
 [[plugins]]
