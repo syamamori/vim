@@ -32,11 +32,11 @@ set statusline=%f "tail of the filename
 
 set encoding=utf-8
 set fileencoding=japan
-set fileencodings=iso-2022-jp,euc-jp,sjis,utf-8
+set fileencodings=utf-8,iso-2022-jp,euc-jp,sjis
 
 set formatoptions=qm
 
-
+set spelllang+=cjk " spell check から日本語除外
 set ignorecase "大文字小文字の区別なし
 set smartcase   "検索文字に大文字があるときは区別する
 set incsearch   "インクリメントサーチ
@@ -44,6 +44,7 @@ set hlsearch    "検索マッチテストをハイライト
 
 set shiftround          " '<'や'>'でインデントする際に'shiftwidth'の倍数に丸める
 set infercase           " 補完時に大文字小文字を区別しない
+set completeopt=menuone " 標準の補完のプレビューを消す．
 set virtualedit=all     " カーソルを文字が存在しない部分でも動けるようにする
 set hidden              " バッファを閉じる代わりに隠す（Undo履歴を残すため）
 set switchbuf=useopen   " 新しく開く代わりにすでに開いてあるバッファを開く

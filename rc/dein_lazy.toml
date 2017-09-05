@@ -35,7 +35,7 @@ hook_source = '''
         execute '!git clone https://github.com/ymatz/vim-latex-completion.git' s:ymatz_repo
     endif
 
-    set dictionary=$HOME/.vim/utils/dein/repos/github.com/ymatz/vim-latex-completion/tex.dict
+    set dictionary+=$HOME/.vim/utils/dein/repos/github.com/ymatz/vim-latex-completion/tex.dict
     let g:neosnippet#snippets_directory+=[s:ymatz_repo]
 '''
 
@@ -54,7 +54,7 @@ hook_add = '''
 [[plugins]]
 repo = "davidhalter/jedi-vim"
 on_ft = ["python", "python3", "djangohtml", "jinja"]
-# on_source = "vim-pyenv"
+on_source = "lambdalisue/vim-pyenv"
 hook_post_update = '''
     if dein#util#_is_windows()
         let cmd = 'pip install jedi'
@@ -87,7 +87,16 @@ hook_source  = '''
             let g:neocomplete#force_omni_input_patterns = {}
     endif
     " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
+    "pyenv の補完を有効にする
+    if isdirectory("~/.pyenv")
+        let $PATH = "~/.pyenv/shims:".$PATH
+    endif
 '''
+
+[[plugins]]
+repo = "lambdalisue/vim-pyenv"
+depends = "jedi-vim"
+on_ft = ["python", "python3", "djangohtml", "jinja"]
 
 [[plugins]]
 repo = 'andviro/flake8-vim'
@@ -134,3 +143,23 @@ on_ft = 'toml'
 [[plugins]]
 repo = 'lazywei/vim-matlab'
 on_ft = 'matlab'
+
+[[plugins]]
+repo = 'ujihisa/neco-look'
+on_ft = 'tex'
+hook_add = '''
+    if !exists('g:neocomplete#text_mode_filetypes')
+        let g:neocomplete#text_mode_filetypes = {}
+    endif
+    let g:neocomplete#text_mode_filetypes = {
+            \ 'rst': 1,
+            \ 'markdown': 1,
+            \ 'gitrebase': 1,
+            \ 'gitcommit': 1,
+            \ 'vcs-commit': 1,
+            \ 'hybrid': 1,
+            \ 'text': 1,
+            \ 'help': 1,
+            \ 'tex': 1,
+            \ }
+'''

@@ -153,3 +153,10 @@ repo = 'kakkyz81/evervim'
 [[plugins]]
 repo = 'tyru/open-browser.vim'
  
+[[plugins]]
+repo = 'daisuzu/translategoogle.vim'
+hook_add = '''
+    let g:translategoogle_default_sl = 'ja'
+    let g:translategoogle_default_tl = 'en'
+'''
+
