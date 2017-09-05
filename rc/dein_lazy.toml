@@ -43,10 +43,9 @@ hook_source = '''
 repo = 'thinca/vim-quickrun'
 hook_add = '''
     let g:quickrun_config = {'_': {
-                            \       'runner': 'vimproc',
-                 "           \       'split': 'ertical'
-                            \     },
-                            \}
+                             \       'runner': 'vimproc',
+                             \},
+                             \}
     nmap <Leader>r <Plug>(quickrun)
     nmap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 '''
@@ -88,9 +87,26 @@ hook_source  = '''
     endif
     " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
     "pyenv の補完を有効にする
-    if isdirectory("~/.pyenv")
-        let $PATH = "~/.pyenv/shims:".$PATH
-    endif
+
+    " PATHの自動更新関数
+    " | 指定された path が $PATH に存在せず、ディレクトリとして存在している場合
+    " | のみ $PATH に加える
+    function! IncludePath(path)
+        " define delimiter depends on platform
+        if has('win16') || has('win32') || has('win64')
+            let delimiter = ";"
+        else
+            let delimiter = ":"
+        endif
+        let pathlist = split($PATH, delimiter)
+        if isdirectory(a:path) && index(pathlist, a:path) == -1
+            let $PATH=a:path.delimiter.$PATH
+        endif
+    endfunction
+
+    " ~/.pyenv/shims を $PATH に追加する
+    " これを行わないとpythonが正しく検索されない
+    IncludePath(expand("~/.pyenv/shims"))
 '''
 
 [[plugins]]
