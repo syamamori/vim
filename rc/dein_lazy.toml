@@ -53,7 +53,7 @@ hook_add = '''
 [[plugins]]
 repo = "davidhalter/jedi-vim"
 on_ft = ["python", "python3", "djangohtml", "jinja"]
-on_source = "lambdalisue/vim-pyenv"
+# on_source = "lambdalisue/vim-pyenv"
 hook_post_update = '''
     if dein#util#_is_windows()
         let cmd = 'pip install jedi'
@@ -65,26 +65,6 @@ hook_post_update = '''
  '''
 hook_source  = '''
     " PATHの自動更新関数
-    " | 指定された path が $PATH に存在せず、ディレクトリとして存在している場合
-    " | のみ $PATH に加える
-    function! IncludePath(path)
-        " define delimiter depends on platform
-        if has('win16') || has('win32') || has('win64')
-            let delimiter = ";"
-        else
-            let delimiter = ":"
-        endif
-        let pathlist = split($PATH, delimiter)
-        if isdirectory(a:path) && index(pathlist, a:path) == -1
-            let $PATH=a:path.delimiter.$PATH
-        endif
-    endfunction
-
-    " ~/.pyenv/shims を $PATH に追加する
-    " これを行わないとpythonが正しく検索されない
-    if isdirectory("~/.pyenv/shims")
-        IncludePath(expand("~/.pyenv/shims"))
-    endif
     autocmd FileType python setlocal completeopt-=preview
     autocmd FileType python setlocal omnifunc=jedi#completions
     let g:jedi#completions_enabled = 0
@@ -113,7 +93,7 @@ hook_source  = '''
 
 [[plugins]]
 repo = "lambdalisue/vim-pyenv"
-depends = "jedi-vim"
+depends = ["jedi-vim"]
 on_ft = ["python", "python3", "djangohtml", "jinja"]
 
 [[plugins]]
@@ -181,3 +161,10 @@ hook_add = '''
             \ 'tex': 1,
             \ }
 '''
+[[plugin]]
+repo = 'tpope/vim-markdown'
+on_ft = 'markdown'
+
+[[plugin]]
+repo = 'vim-pandoc/vim-pandoc-syntax'
+on_ft = 'markdown'
