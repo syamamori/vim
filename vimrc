@@ -78,6 +78,10 @@ set wrap                " 長いテキストの折り返し
 " set textwidth=0         " 自動的に改行が入るのを無効化
 set colorcolumn=80      " その代わり80文字目にラインを入れる
 
+if has('gui_macvim')
+    set transparency=50
+endif
+
 "set paste   " ペースト時のインデントを無効に
 set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
@@ -232,6 +236,8 @@ endif
 
 " set syntax highlight jinja -> vams
 au BufNewFile,BufRead *.jinja set filetype=verilogams
+" set markdown
+autocmd BufNewFile,BufRead *.md set filetype=markdown
 let g:tex_flavor='latex'
  
 

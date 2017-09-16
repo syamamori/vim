@@ -42,9 +42,11 @@ hook_source = '''
 [[plugins]]
 repo = 'thinca/vim-quickrun'
 hook_add = '''
-    let g:quickrun_config = {'_': {
-                             \       'runner': 'vimproc',
-                             \},
+    let g:quickrun_config = {'_': { 'runner': 'vimproc', },
+                                \'markdown': {
+                                         \'command': 'pandoc',
+                                         \  'exec': '%c --from=markdown --to=latex %o %s %a',
+                                         \ },
                              \}
     nmap <Leader>r <Plug>(quickrun)
     nmap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
@@ -109,29 +111,49 @@ repo = 'lervag/vimtex'
 on_ft = ["tex"]
 hook_add = '''
     let g:tex_flavor='latex'
+    let g:vimtex_enabled=1
+    let g:vimtex_latexmk_enabled = 1
+    let g:latex_latexmk_options = '-pdfdvi'
+
+    let g:latex_view_method = 'general'
+    let g:vimtex_view_general_viewer='/Applications/Skim.app/Contents/SharedSupport/displayline'
+    let g:vimtex_view_general_options = '-r @line @pdf @tex'
+
     " clientserver error を無視する
     let g:vimtex_compiler_enable = 0
     let g:vimtex_compiler_latexmk = {'callback' : 0}
-    " let g:vimtex_echo_ignore_wait = 1
-    " filetype plugin on
-    " filetype indent on
-    " set shellslash
-    " set grepprg=grep\ -nH\ $*
-    " let g:tex_flavor='platex'
-    " let g:Imap_UsePlaceHolders = 1
-    " let g:Imap_DeleteEmptyPlaceHolders = 1
-    " let g:Imap_StickyPlaceHolders = 0
-    " let g:Tex_DefaultTargetFormat = 'pdf'
-    " let g:Tex_MultipleCompileFormats='dvi,pdf'
-    " let g:Tex_FormatDependency_pdf = 'dvi,pdf'
-    " let g:Tex_FormatDependency_ps = 'dvi,ps'
-    " let g:Tex_CompileRule_pdf = '/Library/TeX/texbin/ptex2pdf -u -l -ot "-synctex=1 -interaction=nonstopmode -file-line-error-style" $*'
-    " let g:Tex_CompileRule_ps = '/Library/TeX/texbin/dvips -Ppdf -o $*.ps $*.dvi'
-    " let g:Tex_CompileRule_dvi = '/Library/TeX/texbin/uplatex -synctex=1 -interaction=nonstopmode -file-line-error-style $*'
-    " let g:Tex_BibtexFlavor = '/Library/TeX/texbin/upbibtex'
-    " let g:Tex_MakeIndexFlavor = '/Library/TeX/texbin/upmendex $*.idx'
-    " let g:Tex_UseEditorSettingInDVIViewer = 1
-    let g:Tex_ViewRule_pdf = 'Skim'
+    " foward search
+    let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
+    function! UpdateSkim(status)
+        if !a:status | return | endif
+
+        let l:out = b:vimtex.out()
+        let l:tex = expand('%:p')
+        let l:cmd = [g:vimtex_view_general_viewer, '-r']
+        if !empty(system('pgrep Skim'))
+          call extend(l:cmd, ['-g'])
+        endif
+        if has('nvim')
+          call jobstart(l:cmd + [line('.'), l:out, l:tex])
+        elseif has('job')
+          call job_start(l:cmd + [line('.'), l:out, l:tex])
+        else
+          call system(join(l:cmd + [line('.'), shellescape(l:out), shellescape(l:tex)], ' '))
+        endif
+    endfunction
+
+
+    let g:vimtex_latexmk_callback = 1
+
+    let g:vimtex_toc_split_pos = "topleft"
+    let g:vimtex_toc_width = 10
+
+    " for neocomplete
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+      let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    let g:neocomplete#sources#omni#input_patterns.tex = '\\ref{\s*[0-9A-Za-z_:]*'
+    let g:neocomplete#sources#omni#input_patterns.tex = '\\cite{\s*[0-9A-Za-z_:]*\|\\ref{\s*[0-9A-Za-z_:]*'
 '''
 
 [[plugins]]
@@ -161,10 +183,23 @@ hook_add = '''
             \ 'tex': 1,
             \ }
 '''
-[[plugin]]
+[[plugins]]
 repo = 'tpope/vim-markdown'
 on_ft = 'markdown'
+hook_add = '''
+    let g:previm_open_cmd = 'open -a Firefox'
+'''
 
-[[plugin]]
+[[plugins]]
 repo = 'vim-pandoc/vim-pandoc-syntax'
 on_ft = 'markdown'
+
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc'
+on_ft = 'markdown'
+ 
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
