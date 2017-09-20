@@ -78,9 +78,6 @@ set wrap                " 長いテキストの折り返し
 " set textwidth=0         " 自動的に改行が入るのを無効化
 set colorcolumn=80      " その代わり80文字目にラインを入れる
 
-if has('gui_macvim')
-    set transparency=50
-endif
 
 "set paste   " ペースト時のインデントを無効に
 set listchars=tab:»-,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
@@ -112,15 +109,16 @@ let &cpo = s:cpo_save
 unlet s:cpo_save
 
 " Custom Key Mapping
-map \h :vertical resize -10<CR>
-map \j :res +5<CR>
-map \k :res -5<CR>
-map \l :vertical resize +10<CR>
+" map \h :vertical resize -10<CR>
+" map \j :res +5<CR>
+" map \k :res -5<CR>
+" map \l :vertical resize +10<CR>
 "Make
 autocmd FileType make setlocal noexpandtab
 noremap \cm :make<SPACE>clean<CR>:make!<CR>
 noremap \m :make!<CR>
 
+autocmd FileType tex setlocal spell
 " Fold
 nnoremap <space> za
 
@@ -311,3 +309,30 @@ endif
 set runtimepath+=~/.vim/
 runtime! userrc/*.vim
 filetype plugin indent on
+
+ " ステータスラインの表示
+set statusline=%<     " 行が長すぎるときに切り詰める位置
+set statusline+=[%n]  " バッファ番号
+set statusline+=%m    " %m 修正フラグ
+set statusline+=%r    " %r 読み込み専用フラグ
+set statusline+=%h    " %h ヘルプバッファフラグ
+set statusline+=%w    " %w プレビューウィンドウフラグ
+set statusline+=%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}  " fencとffを表示
+set statusline+=%y    " バッファ内のファイルのタイプ
+set statusline+=\     " 空白スペース
+if winwidth(0) >= 130
+  set statusline+=%F    " バッファ内のファイルのフルパス
+else
+  set statusline+=%t    " ファイル名のみ
+endif
+set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
+set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%1l   " 何行目にカーソルがあるか
+set statusline+=/
+set statusline+=%L    " バッファ内の総行数
+set statusline+=,
+set statusline+=%c    " 何列目にカーソルがあるか
+set statusline+=%V    " 画面上の何列目にカーソルがあるか
+set statusline+=\ \   " 空白スペース2個
+set statusline+=%P    " ファイル内の何％の位置にあるか
