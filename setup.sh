@@ -1,9 +1,14 @@
-cp vimrc ~/.vimrc
-cp gvimrc ~/.gvimrc
-cp cc.vim ~/.vim/userrc/cc.vim
 if [ ! -e ~/.vim/rc ]; then
     mkdir ~/.vim/rc
 fi
+if [ ! -d ~/.vim/userrc ]; then
+    mkdri ~/.vim/userrc
+fi
+
+cp vimrc ~/.vimrc
+cp gvimrc ~/.gvimrc
+cp cc.vim ~/.vim/userrc/cc.vim
+
 cp -r rc ~/.vim/
 cp -r template ~/.vim/
 
