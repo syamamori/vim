@@ -52,8 +52,27 @@ hook_add = '''
     nmap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 '''
 
+# [[plugins]]
+# repo = "lambdalisue/vim-pyenv"
+# depends = ["jedi-vim"]
+# on_ft = ["python", "python3", "djangohtml", "jinja"]
+# hook_post_source = '''
+#     python print(sys.path)
+# 
+#     function! s:jedi_auto_force_py_version() abort
+#       let major_version = pyenv#python#get_internal_major_version()
+#       call jedi#force_py_version(major_version)
+#     endfunction
+#     augroup vim-pyenv-custom-augroup
+#       autocmd! *
+#       autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+#       autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+#     augroup END 
+# '''
+
 [[plugins]]
 repo = "davidhalter/jedi-vim"
+# depends = ["vim-pyenv"]
 on_ft = ["python", "python3", "djangohtml", "jinja"]
 # on_source = "lambdalisue/vim-pyenv"
 hook_post_update = '''
@@ -64,7 +83,7 @@ hook_post_update = '''
     else
         let cmd = 'pip install jedi'
     endif
- '''
+'''
 hook_source  = '''
     " PATHの自動更新関数
     autocmd FileType python setlocal completeopt-=preview
@@ -90,17 +109,13 @@ hook_source  = '''
     endif
     " let g:neocomplete#force_omni_input_patterns.python = '\h\w*\|[^. \t]\.\w*'
     "pyenv の補完を有効にする
-
 '''
-
-[[plugins]]
-repo = "lambdalisue/vim-pyenv"
-depends = ["jedi-vim"]
-on_ft = ["python", "python3", "djangohtml", "jinja"]
-
-[[plugins]]
-repo = 'andviro/flake8-vim'
-on_ft = ["python", "python3", "djangohtml", "jinja"]
+hook_post_source = '''
+python print sys.path
+'''
+# [[plugins]]
+# repo = 'andviro/flake8-vim'
+# on_ft = ["python", "python3", "djangohtml", "jinja"]
 
 [[plugins]]
 repo = 'hynek/vim-python-pep8-indent'

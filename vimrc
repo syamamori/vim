@@ -243,31 +243,31 @@ let g:tex_flavor='latex'
 
 " | 指定された path が $PATH に存在せず、ディレクトリとして存在している場合
 " | のみ $PATH に加える
-function! IncludePath(path)
-    " define delimiter depends on platform
-    if has('win16') || has('win32') || has('win64')
-        let delimiter = ";"
-    else
-        let delimiter = ":"
-    endif
-    let pathlist = split($PATH, delimiter)
-    if isdirectory(a:path) && index(pathlist, a:path) == -1
-        let $PATH=a:path.delimiter.$PATH
-    endif
-endfunction
+" function! IncludePath(path)
+"     " define delimiter depends on platform
+"     if has('win16') || has('win32') || has('win64')
+"         let delimiter = ";"
+"     else
+"         let delimiter = ":"
+"     endif
+"     let pathlist = split($PATH, delimiter)
+"     if isdirectory(a:path) && index(pathlist, a:path) == -1
+"         let $PATH=a:path.delimiter.$PATH
+"     endif
+" endfunction
 " ~/.pyenv/shims を $PATH に追加する
 " これを行わないとpythonが正しく検索されない
-let $PYTHONHOME='$HOME/.pyenv/versions/2.7.13'
-let s:pyenvdir = expand('~/.pyenv/shims')
-if isdirectory(s:pyenvdir)
-    if has('gui_macvim')
-        set pythondll=$HOME/.pyenv/versions/anaconda-4.0.0/lib/libpython2.7.dylib
-        set pythondll=$HOME/.pyenv/versions/2.7.13/lib/libpython2.7.dylib
-        let $PYTHONHOME='$HOME/.pyenv/versions/3.6.2'
-        set pythonthreedll=$HOME/.pyenv/versions/3.6.2/lib/libpython3.6m.dylib
-    endif
-    call IncludePath(expand('~/.pyenv/shims'))
-endif
+" let $PYTHONHOME='$HOME/.pyenv/versions/2.7.13'
+" let s:pyenvdir = expand('~/.pyenv/shims')
+" if isdirectory(s:pyenvdir)
+"     if has('gui_macvim')
+"         " set pythondll=$HOME/.pyenv/versions/anaconda-4.0.0/lib/libpython2.7.dylib
+"        set pythondll=$HOME/.pyenv/versions/2.7.14/lib/libpython2.7.dylib
+"         " let $PYTHONHOME='$HOME/.pyenv/versions/3.6.2'
+"         set pythonthreedll=$HOME/.pyenv/versions/3.6.2/lib/libpython3.6m.dylib
+"    endif
+"    call IncludePath(expand('~/.pyenv/shims'))
+" endif
 
 "dein.vim のインストール
 " プラグインが実際にインストールされるディレクトリ
