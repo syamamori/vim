@@ -87,9 +87,16 @@ hook_add = '''
     let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 '''  
 
+# colorscheme
 [[plugins]]
 repo = 'tomasr/molokai'
-
+[[plugins]]
+repo = 'w0ng/vim-hybrid'
+hook_add = '''
+hi Comment ctermfg=cyan guifg=#00b5ff
+hi Folded ctermfg=cyan ctermbg=6 guifg=#00b5ff guibg=#001015
+'''
+ 
 [[plugins]]
 repo = "thinca/vim-template"
 hook_add = '''

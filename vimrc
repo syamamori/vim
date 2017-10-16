@@ -257,11 +257,13 @@ function! IncludePath(path)
 endfunction
 " ~/.pyenv/shims を $PATH に追加する
 " これを行わないとpythonが正しく検索されない
+let $PYTHONHOME='$HOME/.pyenv/versions/2.7.13'
 let s:pyenvdir = expand('~/.pyenv/shims')
 if isdirectory(s:pyenvdir)
     if has('gui_macvim')
         set pythondll=$HOME/.pyenv/versions/anaconda-4.0.0/lib/libpython2.7.dylib
         set pythondll=$HOME/.pyenv/versions/2.7.13/lib/libpython2.7.dylib
+        let $PYTHONHOME='$HOME/.pyenv/versions/3.6.2'
         set pythonthreedll=$HOME/.pyenv/versions/3.6.2/lib/libpython3.6m.dylib
     endif
     call IncludePath(expand('~/.pyenv/shims'))
