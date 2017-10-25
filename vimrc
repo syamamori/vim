@@ -329,7 +329,9 @@ else
   set statusline+=%t    " ファイル名のみ
 endif
 set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+if isdirectory(expand('~/.vim/utils/dein/repos/github.com/tpope/vim-fugitive'))
+  set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
+endif
 set statusline+=\ \   " 空白スペース2個
 set statusline+=%1l   " 何行目にカーソルがあるか
 set statusline+=/
