@@ -7,6 +7,14 @@ repo = 'Shougo/vimproc.vim'
 hook_post_update = '''
     call dein#add('Shougo/vimproc', {'build': 'make'})
 '''
+hook_add = '''
+    call dein#add('Shougo/vimproc', {'build': 'make'})
+    if !filereadable(expand('~/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/lib/vimproc_mac.so'))
+        cd $HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/
+        make
+        echomsg "make vimproc"
+    endif
+'''
 
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
