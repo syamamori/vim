@@ -2,7 +2,7 @@ if [ ! -e ~/.vim/rc ]; then
     mkdir ~/.vim/rc
 fi
 if [ ! -d ~/.vim/userrc ]; then
-    mkdri ~/.vim/userrc
+    mkdir ~/.vim/userrc
 fi
 
 cp vimrc ~/.vimrc
