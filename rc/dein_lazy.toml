@@ -169,7 +169,7 @@ hook_add = '''
         endif
     endfunction
 
-    let g:vimtex_fold_enabled = 1
+    let g:vimtex_fold_enabled = 0
     let g:vimtex_latexmk_callback = 1
 
     let g:vimtex_toc_split_pos = "topleft"
