@@ -8,11 +8,14 @@ hook_post_update = '''
     call dein#add('Shougo/vimproc', {'build': 'make'})
 '''
 hook_add = '''
-    call dein#add('Shougo/vimproc', {'build': 'make'})
-    if !filereadable(expand('~/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/lib/vimproc_mac.so'))
-        cd $HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/
-        make
-        echomsg "make vimproc"
+    if has('mac')
+      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc/lib/vimproc_mac.so'
+    elseif has('unix')
+      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc/lib/vimproc_linux64.so'
+    elseif has('win32')
+      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc/vimproc_win32.dll'
+    elseif has('linux')
+      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc/vimproc_win64.dll'
     endif
 '''
 
