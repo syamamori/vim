@@ -9,13 +9,13 @@ hook_post_update = '''
 '''
 hook_add = '''
     if has('mac')
-      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc/lib/vimproc_mac.so'
+      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/lib/vimproc_mac.so'
     elseif has('unix')
-      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc/lib/vimproc_linux64.so'
+      let g:vimproc_dll_path = '$HOME/.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/lib/vimproc_linux64.so'
     elseif has('win32')
-      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc/vimproc_win32.dll'
+      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/vimproc_win32.dll'
     elseif has('linux')
-      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc/vimproc_win64.dll'
+      let g:vimproc_dll_path = $HOME . '.vim/utils/dein/repos/github.com/Shougo/vimproc.vim/vimproc_win64.dll'
     endif
 '''
 
