@@ -5,6 +5,7 @@ sudo ./configure \
     --prefix=$HOME/bin \
     --enable-fail-if-missing \
     --with-features=huge \
+    --enable-clipboard \
     --enable-fontset \
     --enable-multibyte \
     --enable-gui=gtk2 \
