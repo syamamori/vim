@@ -128,6 +128,7 @@ hook_add = '''
     " Statuslineの設定
     set laststatus=2
     set statusline=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ \[ENC=%{&fileencoding}]%P 
+    set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
 '''
 
 [[plugins]]
