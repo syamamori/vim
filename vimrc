@@ -58,14 +58,8 @@ set matchpairs& matchpairs+=<:>
 set backspace=indent,eol,start
 
 " クリップボードをデフォルトのレジスタとして指定。後にYankRingを使うので
-" 'unnamedplus'が存在しているかどうかで設定を分ける必要がある
-if has('unnamedplus')
-    " set clipboard& clipboard+=unnamedplus " 2013-07-03 14:30 unnamed 追加
-    set clipboard& clipboard+=unnamedplus,unnamed
-else
-    " set clipboard& clipboard+=unnamed,autoselect 2013-06-24 10:00 autoselect 削除
-    set clipboard& clipboard+=unnamed
-endif
+set clipboard&
+set clipboard^=unnamedplus
 
 " Swapファイル？Backupファイル？前時代的すぎなので全て無効化する
 set nowritebackup
@@ -329,9 +323,6 @@ else
   set statusline+=%t    " ファイル名のみ
 endif
 set statusline+=%=    " 左寄せ項目と右寄せ項目の区切り
-if isdirectory(expand('~/.vim/utils/dein/repos/github.com/tpope/vim-fugitive'))
-  set statusline+=%{fugitive#statusline()}  " Gitのブランチ名を表示
-endif
 set statusline+=\ \   " 空白スペース2個
 set statusline+=%1l   " 何行目にカーソルがあるか
 set statusline+=/

@@ -11,4 +11,3 @@ cp cc.vim ~/.vim/userrc/cc.vim
 
 cp -r rc ~/.vim/
 cp -r template ~/.vim/
-
