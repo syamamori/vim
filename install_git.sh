@@ -13,6 +13,8 @@ sudo ./configure \
     --enable-rubyinterp \
     --enable-pythoninterp=dynamic \
     --enable-python3interp=dynamic \
+    --with-x \
+    --with-client-server \
     --with-luajit \
     --enable-cscope
 
