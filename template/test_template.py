@@ -3,23 +3,24 @@
 #
 # Author:   yamamori
 # Created:  <+DATE+>
+# <+CURSOR+>
 
 import unittest
 
 
-class TestILQRmethod(unittest.TestCase):
+class TestCase(unittest.TestCase):
 
     def setUp(self):
         pass
 
-    def test_1(self):
-        # <+CURSOR+>
+    def test_default(self):
         pass
 
 
 def suite():
     suite = unittest.TestSuite()
-    suite.addTest(TestILQRmethod("test_1"))
+    suite.addTest(TestCase('test_default'))
+    return suite
 
 
 if __name__ == "__main__":
